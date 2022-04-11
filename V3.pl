@@ -20,12 +20,6 @@ senioridade(junior, 1)
 
 */
 
-/*
- * qualificacao(quali(junior, 1), quali(pleno, 2), quali(senior, 3)).
- * If-Then-Else statement
- * gt(X,Y) :- X >= Y,write('X maior ou igual a Y').
- * */
-
 /* 7 atributos */
 /*  nome_da_candidato, linguagem, nível_de_qualificação, salario_esperado, cidade_que_mora, idade, tipo_de_contratação */
 candidate(rogério, python, junior, 1000, cidadeC, 20, pj).
@@ -55,9 +49,9 @@ company(empresaC, cidadeB, presencial,8000, pleno, python, clt).
  * */
 
 /*seleciona a qualificação de cada candidato*/
-match_qualificacao(COMPANY, CANDIDATE, QUALIFICACAO_COMPANY, QUALIFICACAO_CANDIDATE) :-
+match_qualificacao(COMPANY, CANDIDATE, QUALIFICACAO_COMPANY, _QUALIFICACAO_CANDIDATE) :-
 	company(COMPANY, _, _, _, QUALIFICACAO_COMPANY, _, _),
-	candidate(CANDIDATE, _, QUALIFICACAO, _, _, _, _).
+	candidate(CANDIDATE, _, _QUALIFICACAO, _, _, _, _).
 
 /*seleciona as melhores opções para o processo seletivo para a empresa X*/
 best_option_processo_seletivo(COMPANY, CANDIDATE, CONTRATACAO, QUALIFICACAO, EXPECTED_SALARY) :-
@@ -68,13 +62,13 @@ best_option_processo_seletivo(COMPANY, CANDIDATE, CONTRATACAO, QUALIFICACAO, EXP
 /*Mostra melhor escolha para o processo seletivo da empresa X*/
 show_best_choice_processo_seletivo_company(COMPANY) :-
     company(COMPANY, _, _, EXPECTED_SALARY, _, _, _),
-    best_option_processo_seletivo(COMPANY, CANDIDATE, CONTRATACAO, QUALIFICACAO, EXPECTED_SALARY),
-    format('~w Melhor escolha ~w\nmatchs: ~w , ~w, ~w',[CANDIDATE, COMPANY, CONTRATACAO, QUALIFICACAO, EXPECTED_SALARY]).
+    best_option_processo_seletivo(COMPANY, CANDIDATE, _CONTRATACAO, _QUALIFICACAO, EXPECTED_SALARY),
+    format('~w Melhor escolha ~w\n',[CANDIDATE, COMPANY]).
 
 /*Mostra melhores escolhas para o processo seletivo para a empresa X*/
 gshow_best_choice_processo_seletivo_company(Result) :-
     company(COMPANY, _, _, EXPECTED_SALARY, _, _, _),
-    findall(CANDIDATE, best_option_processo_seletivo(COMPANY, CANDIDATE, CONTRATACAO, QUALIFICACAO, EXPECTED_SALARY), R),
+    findall(CANDIDATE, best_option_processo_seletivo(COMPANY, CANDIDATE, _CONTRATACAO, _QUALIFICACAO, EXPECTED_SALARY), R),
     sort(R, Result),
     format('~w Melhores escolhas ~w', [COMPANY, Result]).
 
@@ -93,14 +87,11 @@ is_remote(COMPANY, OUT) :-
 	(IsREMOTE = 'remoto', OUT=1; IsREMOTE \= 'remoto', OUT=2).
 
 match_city(COMPANY) :-
-    (is_remote(COMPANY, _OUT) = 1,
-        candidate(CANDIDATE, _, _, _, _, _, _);
-     is_remote(COMPANY, OUT) \= 1,
-        company(COMPANY, CITY, _, _, _, _, _),
-        candidate(CANDIDATE, _, _, _, CITY, _, _)
-    ).
-    /*msort(R, Result),
-    format('Empresa ~w na cidade ~w\ntem os seguintes candidatos:\n~w', [COMPANY, CITY, Result]).*/
+    is_remote(COMPANY, OUT), OUT = 1, candidate(CANDIDATE, _, _, _, _, _, _),
+    format('~w ~w', [COMPANY, CANDIDATE]);
+    is_remote(COMPANY, OUT), OUT = 2, company(COMPANY, CITY, _, _, _, _, _),  candidate(CANDIDATE, _, _, _, CITY, _, _),
+    format('~w ~w', [COMPANY, CANDIDATE]).
+    /*msort(R, Result),*/
 
 /*
  * 4.	A faixa de salário oferecida é compatível com as pretendidas? LUCAS
@@ -158,8 +149,8 @@ best_choice_company(COMPANY, CANDIDATE, CONTRATACAO, LANGUAGE, EXPECTED_SALARY) 
 
 show_best_choice_company(COMPANY) :-
     company(COMPANY, _, _, EXPECTED_SALARY, _, _, _),
-    best_choice_company(COMPANY, CANDIDATE, CONTRATACAO, LANGUAGE, EXPECTED_SALARY),
-    format('~w Melhor escolha ~w\nmatchs: ~w , ~w, ~w',[CANDIDATE, COMPANY, CONTRATACAO, LANGUAGE, EXPECTED_SALARY]).
+    best_choice_company(COMPANY, CANDIDATE, _CONTRATACAO, _LANGUAGE, EXPECTED_SALARY),
+    format('~w Melhor escolha ~w\n',[CANDIDATE, COMPANY]).
 
 gshow_best_choice_company(Result) :-
     company(COMPANY, _, _, EXPECTED_SALARY, _, _, _),
