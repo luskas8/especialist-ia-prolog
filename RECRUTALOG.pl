@@ -12,6 +12,31 @@ Perguntas meta:
 
 */
 
+/*
+ * menu de ajuda
+ */
+help :- 
+    writeln('Menu de ajuda:'),
+    writeln(''),
+    writeln(''),
+    writeln('1 - Utilizar get_candidate_city(Result) para encontrar as cidades dos candidatos'),
+    writeln(''),
+    writeln('2 - Utilizar get_canditates_ages(Result) para encontrar a idade dos candidatos'),
+    writeln(''),
+    writeln('3 - Utilizar show_match_contratacao para encontrar O regime de contratação é compatível 
+             com o regime pretendido pelos candidatos'),
+    writeln(''),
+    writeln('4 - Utilizar salary_company_expected(COMPANY) para encontrar a faixa de salário oferecida 
+             pela as empresas é compatível com as pretendidas pelos candidatos'),
+    writeln(''),
+    writeln('5 - Utilizar match_city(COMPANY) para encontrar candidatos que estão na cidade da empresa 
+             recrutadora'),
+    writeln(''),
+    writeln('6 - Utilizar gshow_best_choice_selective_process_company(Result) para encontrar quais candidatos estão aptos a participar 
+             do processo seletivo de determinada empresa'),
+    writeln(''),
+    writeln('7 - Utilizar gshow_best_choice_company(Result) para encontrar quais os melhores candidatos para determinada vaga').
+
 /* 7 atributos */
 /*  nome_da_candidato, linguagem, nível_de_qualificação, salario_esperado, cidade_que_mora, idade, tipo_de_contratação */
 candidate(antonio, python, senior, 4000, cidadeB, 28, pj).
