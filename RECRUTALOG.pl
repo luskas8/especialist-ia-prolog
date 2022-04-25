@@ -146,8 +146,7 @@ gshow_best_choice_selective_process_company(Result) :-
 /*
  * 7.	Quais os melhores candidatos para determinada vaga? Justifique.
  * 
- * salário					<=		oferecido empresa,	ok
- * (remote ou presencial)	match	empresa				ok
+ * salário				<=	oferecido empresa,		ok
  * linguagem				match	empresa,			ok
  * contratação				match	empresa,			ok
  * qualificação				match	empresa,			ok
